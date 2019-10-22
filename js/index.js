@@ -1,54 +1,68 @@
-let c = document.getElementById("myCanvas");
-let ctx = c.getContext("2d");
-let sbt = document.getElementById("submitButton");
+window.onload = function () {
+    let hours;
+    let days;
+    let form = document.getElementById("form");
+    let reloadBtn = document.getElementById("reloadBtn");
+    //Creates grid when submit is pressed
+    form.onsubmit = function () {
+        hours = document.getElementById("hoursInput").value;
+        days = document.getElementById("daysInput").value;
+        if (document.getElementById("firstColumn").childElementCount === 0) {
+            Draw(days, hours);
 
+        }
+        return false;
+    };
+    // To reload the page press Reload button, otherwise it will not load another grid
+    reloadBtn.addEventListener("click", function() {
+        location.reload();
+    })
+};
 
-// Set the canvas width and height according to the display size
-ctx.canvas.width = window.innerWidth*0.9;
-ctx.canvas.height = window.innerHeight/1.3;
+function Draw(nrDays, nrHours) {
+    let newBlock;
+    let days = document.getElementById('firstColumn');
+    let hours = document.getElementById('firstRow');
+    let classes = document.getElementById('classes');
+    let classHeight = (document.getElementById('content').clientHeight -
+                        document.getElementById('content').clientHeight * 0.1) / nrDays;
+    let hoursPx = (hours.clientWidth - hours.clientWidth * 0.1) / nrHours;
 
-Draw(5, 12);
-
-
-// Clear canvas and draw schedule according to number of days and hours
-sbt.addEventListener("click", function() {
-    let days = document.getElementById("daysInput").value;
-    let hours = document.getElementById("hoursInput").value;
-    ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
-    ctx.beginPath();
-    Draw(days, hours);
-});
-
-
-// Functions that draws the lines inside the canvas
-function Draw(nrOfDays, nrOfHours) {
-    // Draw the first horizontal line 
-    ctx.moveTo(0, ((ctx.canvas.height) / nrOfDays) * 0.4);
-    ctx.lineTo(window.innerWidth, ((ctx.canvas.height) / nrOfDays) * 0.4);
-    ctx.stroke();
-
-    // Draw the first vertical line
-    ctx.moveTo(((ctx.canvas.width) / nrOfHours) * 0.7, 0);
-    ctx.lineTo(((ctx.canvas.width) / nrOfHours) * 0.7, ctx.canvas.height);
-    ctx.stroke();
-
-
-    // Divide each column and row equally
-    let newWidth = (ctx.canvas.width - ((ctx.canvas.width) / nrOfHours) * 0.7) / nrOfHours;
-    let newHeight = (ctx.canvas.height - ((ctx.canvas.height) / nrOfDays) * 0.4) / nrOfDays;
-
-    // Draw lines vertically
-    for (let i = 1; i < nrOfHours; i ++) {
-        ctx.moveTo(newWidth * i + ((ctx.canvas.width) / nrOfHours) * 0.7, 0);
-        ctx.lineTo(newWidth * i + ((ctx.canvas.width) / nrOfHours) * 0.7, ctx.canvas.height);
-        ctx.stroke();
+    // Any of the following "for" can be commented to better understand the code
+    // Draw the rows where the day name will be written
+    for (let i = 0; i < nrDays; i ++) {
+        newBlock = document.createElement('div');
+        newBlock.classList.add('days');
+        newBlock.style.height = classHeight + 'px';
+        if (i === nrDays - 1) {
+            newBlock.style.borderBottom = '0px';
+        }
+        days.appendChild(newBlock);
     }
 
-    // Draw lines horizontally
-    for (let i = 1; i <= nrOfDays; i ++) {
-        ctx.moveTo(0,newHeight * i + ((ctx.canvas.height) / nrOfDays) * 0.4);
-        ctx.lineTo(ctx.canvas.width,newHeight * i + ((ctx.canvas.height) / nrOfDays) * 0.4);
-        ctx.stroke();
+    // Draw the columns where the hours will be written
+    for (let i = 0; i < nrHours; i ++) {
+        newBlock = document.createElement('div');
+        newBlock.classList.add('hours');
+        newBlock.style.width = hoursPx + 'px';
+        if (i === nrHours - 1) {
+            newBlock.style.borderRight = '0px';
+        }
+        hours.appendChild(newBlock);
     }
 
+    // Draw the grid where the content(classes) will be written
+    for (let i = 1 ; i <= nrHours * nrDays; i ++) {
+        newBlock = document.createElement('div');
+        newBlock.classList.add('classDetails');
+        newBlock.style.width = hoursPx + 'px';
+        newBlock.style.height = classHeight + 'px';
+        if (i % nrHours === 0) {
+            newBlock.style.borderRight = '0px';
+        }
+        if (i >= nrDays * nrHours - nrHours + 1) {
+            newBlock.style.borderBottom = '0px';
+        }
+        classes.appendChild(newBlock);
+    }
 }

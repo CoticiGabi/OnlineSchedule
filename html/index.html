@@ -7,20 +7,28 @@
     <!-- Bootstrap -->
     <link rel="stylesheet" href="../css/Bootstrap/bootstrap.min.css">
     <link rel="stylesheet" href="../css/index.css">
+    <script src="../js/index.js"></script>
     <title>Document</title>
 </head>
 <body>
-
-    <div style="text-align: center;">
-        <canvas id="myCanvas">
-        </canvas>
+    <h1 id="h1">HELLO WORLD</h1>
+    <div id="content">
+        <div id="firstRow">
+            <div class="firstRowColumn"></div>
+        </div>
+        <div class="columns">
+            <div id="firstColumn"></div>
+            <div id="classes"></div>
+        </div>
     </div>
 
-    <input id="daysInput" type="text" placeholder="Number of days">
-    <input id="hoursInput" type="text" placeholder="Number of hours">
-    <input type="submit" value="Submit" id="submitButton">
+    <form id="form" action="">
+        <input id="daysInput" type="text" placeholder="Number of days">
+        <input id="hoursInput" type="text" placeholder="Number of hours">
+        <input type="submit" value="Submit" id="submitButton">
+    </form>
+    <button id="reloadBtn">Reload</button>
 
     <!-- <script src="../js/Bootstrap/bootstrap.min.js"></script> -->
-    <script src="../js/index.js"></script>
 </body>
 </html>
