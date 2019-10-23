@@ -11,6 +11,7 @@
     width: 10%;
     height: 100%;
     display: inline-block;
+    text-align: center;
     /*background: green;*/
 }
 
@@ -37,6 +38,7 @@
     height: 90%;
     /*background: pink;*/
     font-size: 0;
+    display: inline-block;
 }
 
 #classes {
@@ -53,6 +55,8 @@
     border-right: 1px solid black;
     /*background: orange;*/
     display: inline-block;
+    font-size: 1rem;
+    vertical-align: bottom;
 }
 
 .hours {
